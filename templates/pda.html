@@ -1,0 +1,181 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<h2 class="mb-4">Pushdown Automata & CFG</h2>
+
+<form method="POST">
+
+    <div class="mb-3">
+        <label class="form-label">Grammar CFG</label>
+        <textarea
+            class="form-control"
+            rows="8"
+            name="grammar">{{ grammar }}</textarea>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Input String</label>
+        <input
+            class="form-control"
+            name="string"
+            value="{{ string }}">
+    </div>
+
+    <button
+        class="btn btn-warning"
+        type="submit">
+        Proses
+    </button>
+
+</form>
+
+{% if message %}
+
+<div class="mt-3">
+
+{% if valid %}
+
+<div class="alert alert-success">
+
+{{ message }}
+
+</div>
+
+{% else %}
+
+<div class="alert alert-danger">
+
+{{ message }}
+
+</div>
+
+{% endif %}
+
+</div>
+
+{% endif %}
+
+
+{% if rules %}
+
+<hr>
+
+<h4>Grammar</h4>
+
+<ul>
+
+{% for item in rules %}
+
+<li>{{ item }}</li>
+
+{% endfor %}
+
+</ul>
+
+{% endif %}
+
+
+{% if derivation %}
+
+<hr>
+
+<h4>Leftmost Derivation</h4>
+
+<div class="d-flex flex-wrap align-items-center">
+
+{% for step in derivation %}
+
+<span class="badge bg-primary fs-6 p-3">
+
+{{ step }}
+
+</span>
+
+{% if not loop.last %}
+
+<span class="mx-2 fs-3">
+
+↓
+
+</span>
+
+{% endif %}
+
+{% endfor %}
+
+</div>
+
+<hr>
+
+<h4>Parse Tree</h4>
+
+<div class="text-center">
+
+<img
+src="{{ url_for('static', filename='img/parse_tree.png') }}"
+class="img-fluid border rounded shadow">
+
+</div>
+
+<hr>
+
+<h4>Stack PDA</h4>
+
+<table class="table table-bordered">
+
+<thead>
+
+<tr>
+
+<th>Langkah</th>
+
+<th>Stack</th>
+
+<th>Sisa Input</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for row in stack_trace %}
+
+<tr>
+
+<td>{{ loop.index }}</td>
+
+<td>{{ row.stack }}</td>
+
+<td>{{ row.input }}</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+{% if accepted %}
+
+<div class="alert alert-success">
+
+✔ String ACCEPTED
+
+</div>
+
+{% else %}
+
+<div class="alert alert-danger">
+
+✖ String REJECTED
+
+</div>
+
+{% endif %}
+
+{% endif %}
+
+{% endblock %}

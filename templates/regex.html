@@ -1,0 +1,103 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<h2 class="mb-4">
+
+Regular Expression Simulator
+
+</h2>
+
+<form method="POST">
+
+<div class="mb-3">
+
+<label>Regular Expression</label>
+
+<input
+class="form-control"
+name="pattern"
+value="{{ pattern }}"
+placeholder="(a|b)*abb">
+
+</div>
+
+<div class="mb-3">
+
+<label>Input String</label>
+
+<input
+class="form-control"
+name="string"
+value="{{ string }}"
+placeholder="aaabb">
+
+</div>
+
+<button
+class="btn btn-success"
+type="submit">
+
+Uji Regex
+
+</button>
+
+</form>
+
+{% if result %}
+
+<hr>
+
+{% if result.valid %}
+
+{% if result.match %}
+
+<div class="alert alert-success">
+
+✔ STRING SESUAI DENGAN REGEX
+
+</div>
+
+{% else %}
+
+<div class="alert alert-danger">
+
+✖ STRING TIDAK SESUAI
+
+</div>
+
+{% endif %}
+
+{% else %}
+
+<div class="alert alert-warning">
+
+Regex tidak valid
+
+<br>
+
+{{ result.error }}
+
+</div>
+
+{% endif %}
+
+<h4 class="mt-4">
+
+Penjelasan Operator
+
+</h4>
+
+<ul>
+
+{% for item in explanation %}
+
+<li>{{ item }}</li>
+
+{% endfor %}
+
+</ul>
+
+{% endif %}
+
+{% endblock %}

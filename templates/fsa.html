@@ -1,0 +1,153 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<h2 class="mb-4">Finite State Automata Simulator</h2>
+
+<form method="POST">
+
+    <div class="mb-3">
+        <label class="form-label">States</label>
+        <input class="form-control" name="states" placeholder="q0,q1,q2">
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Alphabet</label>
+        <input class="form-control" name="alphabet" placeholder="a,b">
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Initial State</label>
+        <input class="form-control" name="start" placeholder="q0">
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Final State</label>
+        <input class="form-control" name="finals" placeholder="q2">
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Transitions</label>
+        <textarea
+            class="form-control"
+            rows="6"
+            name="transitions"
+            placeholder="q0,a=q1
+q1,b=q2
+q2,a=q2"></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Input String</label>
+        <input class="form-control" name="string" placeholder="aba">
+    </div>
+
+    <button class="btn btn-primary" type="submit">
+    Simulasikan
+    </button>
+
+    <a href="/fsa" class="btn btn-secondary ms-2">
+    Reset
+    </a>
+
+    <button
+    type="button"
+    class="btn btn-success ms-2"
+    onclick="contoh()">
+
+    Contoh
+
+    </button>
+
+</form>
+
+{% if result is not none %}
+
+<hr>
+
+{% if result %}
+<div class="alert alert-success">
+    ACCEPTED
+</div>
+{% else %}
+<div class="alert alert-danger">
+    REJECTED
+</div>
+{% endif %}
+
+<div class="alert alert-info">
+    <b>Jumlah State:</b> {{ states|length }}<br>
+    <b>Alphabet:</b> {{ alphabet|join(', ') }}<br>
+    <b>Initial State:</b> {{ start }}<br>
+    <b>Final State:</b> {{ finals|join(', ') }}
+</div>
+
+<h4 class="mt-4">Trace Perpindahan State</h4>
+
+<div class="d-flex flex-wrap align-items-center mb-4">
+
+    {% for s in trace %}
+
+    <span class="badge bg-primary fs-6 p-3">{{ s }}</span>
+
+    {% if not loop.last %}
+    <span class="mx-2 fs-4">→</span>
+    {% endif %}
+
+    {% endfor %}
+
+</div>
+
+<h4>Tabel Transisi</h4>
+
+<table class="table table-bordered">
+
+    <thead>
+        <tr>
+            <th>State</th>
+            <th>Input</th>
+            <th>Next State</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        {% for item in table %}
+
+        <tr>
+            <td>{{ item[0] }}</td>
+            <td>{{ item[1] }}</td>
+            <td>{{ item[2] }}</td>
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+
+</table>
+
+{% endif %}
+
+<script>
+
+function contoh(){
+
+document.querySelector("[name=states]").value="q0,q1,q2";
+
+document.querySelector("[name=alphabet]").value="a,b";
+
+document.querySelector("[name=start]").value="q0";
+
+document.querySelector("[name=finals]").value="q2";
+
+document.querySelector("[name=transitions]").value=`q0,a=q1
+q1,b=q2
+q2,a=q2`;
+
+document.querySelector("[name=string]").value="aba";
+
+}
+
+</script>
+
+{% endblock %}

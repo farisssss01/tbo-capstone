@@ -1,0 +1,94 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<h2 class="mb-4">
+
+Hierarki Chomsky
+
+</h2>
+
+<form method="POST">
+
+<div class="mb-3">
+
+<label class="form-label">
+
+Grammar
+
+</label>
+
+<textarea
+class="form-control"
+rows="8"
+name="grammar"
+placeholder="S -> aA | b
+A -> aS | a">{{ grammar }}</textarea>
+
+</div>
+
+<button
+class="btn btn-danger"
+type="submit">
+
+Analisis
+
+</button>
+
+</form>
+
+{% if grammar_type %}
+
+<hr>
+
+<div class="alert alert-success">
+
+<b>{{ grammar_type }}</b>
+
+</div>
+
+<h4>
+
+Alasan
+
+</h4>
+
+<ul>
+
+{% for item in reasons %}
+
+<li>{{ item }}</li>
+
+{% endfor %}
+
+</ul>
+
+{% if cnf_steps %}
+
+<hr>
+
+<h4>
+
+Tahapan Konversi Menuju CNF
+
+</h4>
+
+<div class="card">
+
+<div class="card-body">
+
+{% for step in cnf_steps %}
+
+<p>{{ step }}</p>
+
+{% endfor %}
+
+</div>
+
+</div>
+
+{% endif %}
+
+{% endif %}
+
+{% endblock %}
